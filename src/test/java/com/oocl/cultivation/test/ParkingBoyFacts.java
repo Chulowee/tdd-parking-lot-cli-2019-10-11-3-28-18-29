@@ -62,4 +62,40 @@ class ParkingBoyFacts {
         assertNotSame(myCar, fetchedCar);
     }
 
+    @Test
+    void should_parking_boy_return_null_with_no_capacity() {
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        Car myCar = new Car();
+
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+        ParkingTicket parked = parkingBoy.park(myCar);
+
+        assertNull(parked);
+    }
+
+    @Test
+    void should_parking_boy_removed_fetched_car() {
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        Car myCar = new Car();
+
+        parkingBoy.park(myCar);
+        ParkingTicket ticket = parkingBoy.park(myCar);
+
+        Car fetchedCar = parkingBoy.fetch(ticket);
+
+        assertNotNull(fetchedCar);
+        Car fetchedCarAgain = parkingBoy.fetch(ticket);
+        assertNull(fetchedCarAgain);
+    }
 }

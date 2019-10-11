@@ -20,12 +20,17 @@ public class ParkingLot {
     }
 
     public ParkingTicket park(Car car) {
-        ParkingTicket parkingTicket = new ParkingTicket();
-        cars.put(parkingTicket,car);
-        return parkingTicket;
+        if (getAvailableParkingPosition()<=-1){
+            ParkingTicket parkingTicket = new ParkingTicket();
+            cars.put(parkingTicket,car);
+            return parkingTicket;
+        }
+        return null;
     }
 
     public Car fetch(ParkingTicket ticket) {
-        return cars.get(ticket);
+        Car car = cars.get(ticket);
+        cars.remove(ticket);
+        return car;
     }
 }
