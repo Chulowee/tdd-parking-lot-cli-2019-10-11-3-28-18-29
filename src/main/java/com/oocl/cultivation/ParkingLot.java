@@ -15,22 +15,31 @@ public class ParkingLot {
         this.capacity = capacity;
     }
 
-    public int getAvailableParkingPosition() {
-        return cars.size() - capacity;
+    int getAvailableParkingPosition() {
+        return capacity - cars.size();
     }
 
-    public ParkingTicket park(Car car) {
-        if (getAvailableParkingPosition()<=-1){
-            ParkingTicket parkingTicket = new ParkingTicket();
-            cars.put(parkingTicket,car);
-            return parkingTicket;
+    double getAvailableParkingPositionRate() {
+        return (double) getAvailableParkingPosition() / (double) capacity;
+    }
+
+    ParkingTicket park(Car car) {
+        if (isParkingLotFull()) {
+            return null;
         }
-        return null;
+
+        ParkingTicket parkingTicket = new ParkingTicket();
+        cars.put(parkingTicket, car);
+        return parkingTicket;
     }
 
-    public Car fetch(ParkingTicket ticket) {
+    Car fetchCar(ParkingTicket ticket) {
         Car car = cars.get(ticket);
         cars.remove(ticket);
         return car;
+    }
+
+    boolean isParkingLotFull() {
+        return cars.size() == capacity;
     }
 }
